@@ -13,7 +13,7 @@ body {
 }
 
 .container {
-    background-color: #000000; /* Cinza muito escuro, quase preto para containers */
+    background-color: #0b0b0b; /* Cinza muito escuro, quase preto para containers */
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -26,6 +26,7 @@ body {
 h1, h2, h3 {
     color: #CD1C18; /* Vermelho especificado */
 }
+
 h1 {
     text-shadow: 0 0 5px rgba(205, 28, 24, 0.5);
 }
@@ -52,6 +53,7 @@ input[type="text"] {
     color: #e0e0e0;
     font-size: 1em;
 }
+
 input[type="text"]::placeholder {
     color: #888;
 }
@@ -72,6 +74,7 @@ button {
 button:hover {
     background-color: #E0302C; /* Vermelho um pouco mais claro no hover */
 }
+
 button:active {
     transform: scale(0.98);
 }
@@ -84,16 +87,15 @@ button:disabled {
 }
 
 .main-action-btn {
-    /* Mantendo o verde para ações principais claras, ou mude para vermelho se preferir */
-    background-color: #CD1C18; /* Ou um tom de verde como #27ae60 */
+    background-color: #CD1C18; 
     width: 100%;
     padding: 15px;
     font-size: 1.1em;
 }
-.main-action-btn:hover {
-    background-color: #E0302C; /* Ou um tom de verde mais claro #2ecc71 */
-}
 
+.main-action-btn:hover {
+    background-color: #E0302C;
+}
 
 .choice-btn {
     padding: 15px;
@@ -101,38 +103,46 @@ button:disabled {
     margin: 10px 5px;
 }
 
+/* ALTERAÇÃO 3: Cores dos botões Verdade/Consequência */
 #truth-btn {
-    background-color: #b31714; /* Tom um pouco diferente de vermelho para diferenciar */
+    background-color: #008000; /* Verde */
 }
+
 #truth-btn:hover {
-    background-color: #CD1C18;
+    background-color: #009900; /* Verde mais claro */
 }
 
 #dare-btn {
-    background-color: #CD1C18; /* Vermelho principal */
+    background-color: #e32227; /* Vermelho novo */
 }
+
 #dare-btn:hover {
-    background-color: #E0302C;
+    background-color: #f04045; /* Vermelho novo mais claro */
 }
 
 .action-btn {
     margin: 10px 5px;
 }
+
 .danger-btn { /* Botão de beber */
     background-color: #A01511; /* Vermelho ainda mais escuro para perigo */
 }
+
 .danger-btn:hover {
     background-color: #B31714;
 }
-
 
 #player-list {
     list-style: none;
     padding: 0;
 }
 
+/* ALTERAÇÃO 1: Estilo para o item da lista (para alinhar o botão de remover) */
 #player-list li {
-    background-color: #1c1c1c; /* Fundo escuro para itens da lista */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1c1c1c;
     color: #ccc;
     padding: 10px;
     margin-bottom: 8px;
@@ -140,6 +150,26 @@ button:disabled {
     font-size: 1.1em;
     border-left: 3px solid #CD1C18;
 }
+
+/* ALTERAÇÃO 1: Estilo para o botão de remover */
+.remove-player-btn {
+    background-color: #a01511;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 1em;
+    line-height: 28px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 0 0 10px;
+}
+.remove-player-btn:hover {
+    background-color: #CD1C18;
+}
+
 
 #player-status-area div {
     margin: 8px 0;
@@ -176,6 +206,7 @@ button:disabled {
 #loading-next-player h2 {
     margin-bottom: 20px;
 }
+
 #loading-gif {
     max-width: 150px;
     height: auto;
