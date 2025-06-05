@@ -1,0 +1,224 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background-color: #000000; /* Preto bem escuro */
+    color: #e0e0e0;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #000000; /* Cinza muito escuro, quase preto para containers */
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(205, 28, 24, 0.2); /* Sombra vermelha sutil */
+    width: 90%;
+    max-width: 600px;
+    border: 1px solid #222; /* Borda sutil para os containers */
+}
+
+h1, h2, h3 {
+    color: #CD1C18; /* Vermelho especificado */
+}
+h1 {
+    text-shadow: 0 0 5px rgba(205, 28, 24, 0.5);
+}
+
+#game-logo {
+    max-width: 280px; /* Ajuste conforme necessário */
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.input-group {
+    display: flex;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #444; /* Cinza para borda do input */
+    background-color: #1a1a1a; /* Fundo escuro para input */
+    color: #e0e0e0;
+    font-size: 1em;
+}
+input[type="text"]::placeholder {
+    color: #888;
+}
+
+button {
+    padding: 12px 18px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #CD1C18; /* Vermelho especificado */
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: #E0302C; /* Vermelho um pouco mais claro no hover */
+}
+button:active {
+    transform: scale(0.98);
+}
+
+button:disabled {
+    background-color: #555; /* Cinza escuro para desabilitado */
+    color: #999;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.main-action-btn {
+    /* Mantendo o verde para ações principais claras, ou mude para vermelho se preferir */
+    background-color: #CD1C18; /* Ou um tom de verde como #27ae60 */
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1em;
+}
+.main-action-btn:hover {
+    background-color: #E0302C; /* Ou um tom de verde mais claro #2ecc71 */
+}
+
+
+.choice-btn {
+    padding: 15px;
+    font-size: 1.1em;
+    margin: 10px 5px;
+}
+
+#truth-btn {
+    background-color: #b31714; /* Tom um pouco diferente de vermelho para diferenciar */
+}
+#truth-btn:hover {
+    background-color: #CD1C18;
+}
+
+#dare-btn {
+    background-color: #CD1C18; /* Vermelho principal */
+}
+#dare-btn:hover {
+    background-color: #E0302C;
+}
+
+.action-btn {
+    margin: 10px 5px;
+}
+.danger-btn { /* Botão de beber */
+    background-color: #A01511; /* Vermelho ainda mais escuro para perigo */
+}
+.danger-btn:hover {
+    background-color: #B31714;
+}
+
+
+#player-list {
+    list-style: none;
+    padding: 0;
+}
+
+#player-list li {
+    background-color: #1c1c1c; /* Fundo escuro para itens da lista */
+    color: #ccc;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    font-size: 1.1em;
+    border-left: 3px solid #CD1C18;
+}
+
+#player-status-area div {
+    margin: 8px 0;
+    padding: 10px;
+    background-color: #151515;
+    border-left: 4px solid #CD1C18;
+    border-radius: 4px;
+    color: #ddd;
+}
+
+.eliminated {
+    text-decoration: line-through;
+    color: #777 !important;
+    border-left-color: #555 !important;
+    background-color: #101010 !important;
+}
+
+#question-dare-display {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #1f1f1f; /* Fundo um pouco mais claro para destaque */
+    border-radius: 8px;
+    min-height: 60px;
+    border: 1px solid #CD1C18;
+}
+
+#text-display {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #f5f5f5;
+}
+
+#loading-next-player h2 {
+    margin-bottom: 20px;
+}
+#loading-gif {
+    max-width: 150px;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid #CD1C18; /* Borda vermelha no GIF */
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #CD1C18; /* Linha divisória vermelha */
+    margin: 25px 0;
+}
+
+/* Responsividade básica */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+        width: 95%;
+    }
+    h1 { font-size: 1.7em; }
+    h2 { font-size: 1.3em; }
+    button, input[type="text"] {
+        font-size: 0.9em; /* Reduzido um pouco para caber melhor */
+        padding: 10px 12px;
+    }
+    .choice-btn, .main-action-btn {
+        padding: 12px;
+        font-size: 1em;
+    }
+    #text-display {
+        font-size: 1.1em;
+    }
+    .input-group {
+        flex-direction: column;
+    }
+    .input-group input[type="text"] {
+        margin-bottom: 10px;
+    }
+    .input-group button {
+        width: 100%;
+    }
+    #game-logo {
+        max-width: 200px; /* Logo menor em telas pequenas */
+    }
+}
