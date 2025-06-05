@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verdade ou Consequência Hard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="setup-area" class="container">
+        <img src="https://i.imgur.com/kwMtTbD.png" alt="Logo do Jogo" id="game-logo">
+        <h1>Verdade ou Consequência</h1>
+        <h2>Adicionar Jogadores (Máx. 10)</h2>
+        <div class="input-group">
+            <input type="text" id="player-name-input" placeholder="Nome do Jogador">
+            <button id="add-player-btn">Adicionar</button>
+        </div>
+        <h3>Jogadores Adicionados:</h3>
+        <ul id="player-list"></ul>
+        <button id="start-game-btn" class="main-action-btn" disabled>Iniciar Jogo</button>
+    </div>
+
+    <div id="loading-next-player" class="container" style="display: none;">
+        <h2>Sorteando o próximo jogador...</h2>
+        <img src="https://i.imgur.com/oktrkra.gif" alt="Sorteando..." id="loading-gif">
+    </div>
+
+    <div id="game-area" class="container" style="display: none;">
+        <h2 id="current-player-display">Vez de: </h2>
+        <div id="choice-buttons">
+            <button id="truth-btn" class="choice-btn">VERDADE</button>
+            <button id="dare-btn" class="choice-btn">CONSEQUÊNCIA</button>
+        </div>
+        <div id="question-dare-display" style="display: none;">
+            <p id="text-display"></p>
+            <button id="done-btn" class="action-btn">FEITO!</button>
+            <button id="drink-btn" class="action-btn danger-btn">BEBER :(</button>
+        </div>
+        <hr>
+        <h3>Status dos Jogadores:</h3>
+        <div id="player-status-area"></div>
+    </div>
+
+    <div id="game-over-area" class="container" style="display: none;">
+        <h2>Fim de Jogo!</h2>
+        <p id="winner-display"></p>
+        <button id="restart-game-btn" class="main-action-btn">Jogar Novamente</button>
+    </div>
+
+    <!-- Elemento de áudio para o som de clique -->
+    <!-- Substitua 'click.mp3' pelo caminho do seu arquivo de som se for diferente -->
+    <audio id="click-sound" src="click.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
