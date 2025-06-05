@@ -1,5 +1,8 @@
 // --- DADOS DO JOGO (PERGUNTAS E CONSEQUÊNCIAS) ---
-const ORIGINAL_VERDADES_HARD = [
+const ORIGINAL_VERDADES_HARD = [ /* ...SUAS PERGUNTAS DE VERDADE... */ ];
+const ORIGINAL_CONSEQUENCIAS_HARD = [ /* ...SUAS PERGUNTAS DE CONSEQUÊNCIA... */ ];
+// PREENCHA AS LISTAS ACIMA COMPLETAMENTE! Vou colocar algumas para exemplo:
+ORIGINAL_VERDADES_HARD.push(
     "Das pessoas aqui, com quem você mais gostaria de ficar?",
     "Qual a maior mentira que já contou a um(a) ex e nunca foi descoberta?",
     "Qual foi a coisa mais embaraçosa que seus pais já pegaram você fazendo?",
@@ -50,9 +53,8 @@ const ORIGINAL_VERDADES_HARD = [
     "Já fez sexting hardcore? Com quem?",
     "Qual foi o “walk of shame” mais constrangedor?",
     "Já usou algemas, vendas ou amarras?"
-];
-
-const ORIGINAL_CONSEQUENCIAS_HARD = [
+);
+ORIGINAL_CONSEQUENCIAS_HARD.push(
     "Mande mensagem ousada “sem querer” para um contato aleatório.",
     "Ligue para alguém e diga que está grávido(a) / vai ser pai/mãe.",
     "Faça striptease caprichado de 30 s.",
@@ -63,20 +65,14 @@ const ORIGINAL_CONSEQUENCIAS_HARD = [
     "Cheire as axilas da pessoa à sua direita.",
     "Tire as meias com a boca.",
     "Fique 5 rodadas numa pose escolhida pelo grupo.",
-    "Faça 100 agachamentos agora.",
     "Deixe a pessoa à esquerda te desenhar o rosto inteiro com caneta.",
     "Envie um áudio gemendo como se estivesse espreguiçando para um amigo.",
     "Diga “sim” para tudo até seu próximo turno.",
-    "Beije quem está à sua esquerda (na bochecha ou boca—grupo decide).",
-    "Depile um trecho da perna ou braço ao vivo.",
+    "Beije quem está à sua esquerda (na bochecha ou boca— grupo decide).",
     "Poste nos stories “Pensando em abrir um OnlyFans… opiniões?” e deixe 15 min.",
-    "Faça uma ligação e pergunte se vendem “coxinha vegana de picanha”.",
-    "Dance “Single Ladies” olhando fixo para alguém por 20 s.",
-    "Poste apenas um “.” nos stories sem explicar.",
     "Dê um beijo no pescoço da pessoa que você escolher.",
     "Assista a um vídeo pornô (fora da câmera) e imite a primeira cena por 10 s.",
     "Lamba os mamilos do parceiro(a) ou da própria mão simulando.",
-    "Compre um sex toy online e mostre o comprovante.",
     "Faça massagem sensual usando só uma mão por 1 min em alguém.",
     "Seduza alguém para tomar banho de roupa juntos (pode ser ficção encenada).",
     "Permita que alguém faça uma foto sensual sua (sem nude explícito).",
@@ -87,36 +83,35 @@ const ORIGINAL_CONSEQUENCIAS_HARD = [
     "Gemer como se tivesse o melhor orgasmo enquanto come algo.",
     "Desafiar-se a abrir bombom com a boca somente.",
     "Simular fazer amor com o chão por 30 s.",
-    "Mostrar a “cara de orgasmo” e mantê-la 5 s.",
+    "Mostrar a “cara de orgasmo”",
     "Fazer body shot (beber líquido no corpo de alguém) consensualmente.",
     "Beijar suas próprias mãos como se fossem outra pessoa.",
     "Encenar a cena mais sexy de um filme que você lembrar.",
-    "Ligar para um clube de sexo e se candidatar a vaga, descrevendo “talentos”.",
-    "Mudar status no WhatsApp para “Estou chegando…” depois “Acabei de chegar”.",
+    "Colocar no status do WhatsApp para “Estou gozando…” depois “Acabei de gozar”.",
     "Fazer twerk por 1 min; se não souber, aprender na hora.",
     "Colocar chantilly em parte do corpo e deixar alguém lamber (se toparem).",
-    "Cozinhar usando só um avental.",
     "Desenhar o corpo nu de alguém (ou descrição verbal se preferirem).",
     "Fazer massagem nas costas de alguém sem usar as mãos.",
-    "Simular sexo oral em uma garrafa por 15 s.",
-    "Comprar e mostrar brinquedo sexual imaginando uso futuro.",
-    "Fazer lap dance completo de 30 s.",
+    "Simular sexo oral em uma fruta por 15 s.",
+    "Fazer lap dance completo de 30 s na pessoa a sua esquerda.",
     "Usar voz de bebê até o próximo turno.",
-    "Deixar um(a) amigo(a) postar qualquer frase no seu Twitter/X."
-];
+    "Deixar um(a) amigo(a) postar qualquer frase no seu X."
+);
+
 
 let verdadesAtuais = [];
 let consequenciasAtuais = [];
 
 // --- VARIÁVEIS GLOBAIS DO JOGO ---
 let players = [];
-let currentPlayerIndex = -1;
-let currentPlayer;
+let currentPlayer; // O objeto do jogador atual
+let playerTurnOrder = []; // <<< NOVO: Lista para controlar a ordem dos turnos
 const MAX_PLAYERS = 10;
 const MAX_DRINKS = 3;
-const GIF_DURATION = 5000;
+const GIF_DURATION = 5000; // 5 segundos para o GIF (ou 3000 para 3s como no seu GIF)
 
 // --- ELEMENTOS DO DOM ---
+// ... (nenhuma mudança nos elementos do DOM)
 const playerNameInput = document.getElementById('player-name-input');
 const addPlayerBtn = document.getElementById('add-player-btn');
 const playerListUI = document.getElementById('player-list');
@@ -141,16 +136,14 @@ const playerStatusArea = document.getElementById('player-status-area');
 const winnerDisplay = document.getElementById('winner-display');
 const restartGameBtn = document.getElementById('restart-game-btn');
 
-const clickSound = document.getElementById('click-sound'); // Pega o elemento de áudio
+const clickSound = document.getElementById('click-sound');
 
 // --- FUNÇÕES DO JOGO ---
 
 function playClickSound() {
     if (clickSound) {
-        clickSound.currentTime = 0; // Para permitir tocar repetidamente
+        clickSound.currentTime = 0;
         clickSound.play().catch(error => {
-            // Alguns navegadores podem bloquear o autoplay até a primeira interação do usuário.
-            // O clique já é uma interação, mas é bom ter o catch.
             console.log("Erro ao tocar som de clique:", error);
         });
     }
@@ -161,6 +154,7 @@ function shuffleArray(array) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
+    return array; // Retorna o array embaralhado
 }
 
 function loadQuestions() {
@@ -181,10 +175,10 @@ function updatePlayerListUI() {
 }
 
 function addPlayer() {
-    playClickSound(); // Toca som
+    playClickSound();
     const name = playerNameInput.value.trim();
     if (name && players.length < MAX_PLAYERS) {
-        players.push({ name: name, drinks: 0, eliminated: false });
+        players.push({ name: name, drinks: 0, eliminated: false, id: Date.now() + name }); // Adiciona um ID único simples
         playerNameInput.value = '';
         updatePlayerListUI();
     } else if (players.length >= MAX_PLAYERS) {
@@ -206,8 +200,10 @@ function updatePlayerStatusDisplay() {
     });
 }
 
+// MODIFICADO: selectNextPlayer
 function selectNextPlayer() {
     const activePlayers = players.filter(p => !p.eliminated);
+
     if (activePlayers.length === 0) {
         endGame("Ninguém sobrou! Empate ou todos desistiram.");
         return null;
@@ -216,53 +212,71 @@ function selectNextPlayer() {
         endGame(activePlayers[0].name + " é o(a) vencedor(a)!");
         return null;
     }
+    // Caso especial: se só havia 1 jogador desde o início e ele é eliminado no handleDrink,
+    // o endGame já trata isso lá. Se ele não for eliminado, ele continua.
 
-    let nextPlayerIndex;
-    if (activePlayers.length === 1) {
-        nextPlayerIndex = players.findIndex(p => p === activePlayers[0]);
-    } else {
-        do {
-            nextPlayerIndex = Math.floor(Math.random() * players.length);
-        } while (players[nextPlayerIndex].eliminated || (activePlayers.length > 1 && nextPlayerIndex === currentPlayerIndex) );
+    // Se a lista de turnos está vazia, preenche com os jogadores ativos e embaralha
+    if (playerTurnOrder.length === 0) {
+        if (activePlayers.length > 0) {
+            playerTurnOrder = shuffleArray([...activePlayers]); // Cria uma cópia e embaralha
+        } else {
+            // Isso não deveria acontecer se as checagens acima forem feitas, mas por segurança:
+            endGame("Erro: Não há jogadores ativos para formar uma rodada.");
+            return null;
+        }
     }
 
-    currentPlayerIndex = nextPlayerIndex;
-    currentPlayer = players[currentPlayerIndex];
-    return currentPlayer;
+    // Pega o próximo jogador da lista de turnos e o remove
+    if (playerTurnOrder.length > 0) {
+        currentPlayer = playerTurnOrder.shift(); // Pega e remove o primeiro
+        return currentPlayer;
+    } else {
+        // Se mesmo após tentar repopular, a lista está vazia (ex: todos eliminados)
+        // As verificações no início da função devem pegar isso, mas é uma salvaguarda.
+        endGame("Não foi possível determinar o próximo jogador.");
+        return null;
+    }
 }
 
+
 function startGame() {
-    playClickSound(); // Toca som
+    playClickSound();
     if (players.length < 1) {
         alert("Adicione pelo menos 1 jogador para começar!");
         return;
     }
     loadQuestions();
+    playerTurnOrder = []; // Limpa a ordem de turnos anterior
+    // A seleção inicial do jogador agora acontece DENTRO do setTimeout, após o GIF
+
     setupArea.style.display = 'none';
     gameArea.style.display = 'none';
     loadingNextPlayerArea.style.display = 'block';
     gameOverArea.style.display = 'none';
-    currentPlayerIndex = -1;
 
     setTimeout(() => {
         loadingNextPlayerArea.style.display = 'none';
         gameArea.style.display = 'block';
-        nextTurnFlow();
+        nextTurnFlow(); // Chama o fluxo que seleciona o jogador e configura o turno
     }, GIF_DURATION);
 }
 
 function nextTurnFlow() {
-    const activePlayer = selectNextPlayer();
-    if (!activePlayer) return;
+    const activePlayer = selectNextPlayer(); // Agora usa a lógica de playerTurnOrder
+    if (!activePlayer) {
+        // Se selectNextPlayer retornou null, o jogo já foi finalizado por ela
+        return;
+    }
+    // `currentPlayer` já foi definido por `selectNextPlayer`
 
-    currentPlayerDisplay.textContent = `Vez de: ${activePlayer.name}`;
+    currentPlayerDisplay.textContent = `Vez de: ${currentPlayer.name}`;
     choiceButtonsDiv.style.display = 'block';
     questionDareDisplayDiv.style.display = 'none';
     updatePlayerStatusDisplay();
 }
 
 function showTruth() {
-    playClickSound(); // Toca som
+    playClickSound();
     if (verdadesAtuais.length === 0) {
         alert("Todas as verdades foram usadas! Recarregando...");
         loadQuestions();
@@ -280,7 +294,7 @@ function showTruth() {
 }
 
 function showDare() {
-    playClickSound(); // Toca som
+    playClickSound();
     if (consequenciasAtuais.length === 0) {
         alert("Todas as consequências foram usadas! Recarregando...");
         loadQuestions();
@@ -311,31 +325,43 @@ function prepareNextTurn() {
 }
 
 function handleDone() {
-    playClickSound(); // Toca som
+    playClickSound();
     prepareNextTurn();
 }
 
 function handleDrink() {
-    playClickSound(); // Toca som
+    playClickSound();
     if (currentPlayer) {
-        currentPlayer.drinks++;
-        if (currentPlayer.drinks >= MAX_DRINKS) {
-            currentPlayer.eliminated = true;
-            alert(`${currentPlayer.name} bebeu ${MAX_DRINKS} vezes e foi eliminado(a)!`);
+        // Encontra o jogador real na lista 'players' para atualizar,
+        // já que 'currentPlayer' pode ser de uma cópia em 'playerTurnOrder'
+        const playerInMainList = players.find(p => p.id === currentPlayer.id);
+        if (!playerInMainList) {
+            console.error("Erro: Jogador atual não encontrado na lista principal.");
+            prepareNextTurn(); // Tenta continuar o jogo
+            return;
         }
-        updatePlayerStatusDisplay();
-        
-        const activePlayers = players.filter(p => !p.eliminated);
-        if (players.length > 1 && activePlayers.length <= 1) {
-             if (activePlayers.length === 1) {
-                endGame(activePlayers[0].name + " é o(a) vencedor(a)!");
+
+        playerInMainList.drinks++;
+        if (playerInMainList.drinks >= MAX_DRINKS) {
+            playerInMainList.eliminated = true;
+            // Se o jogador eliminado estava na playerTurnOrder, ele será naturalmente
+            // ignorado na próxima vez que a playerTurnOrder for reconstruída.
+            // Não precisa remover de playerTurnOrder manualmente aqui, pois ela será refeita.
+            alert(`${playerInMainList.name} bebeu ${MAX_DRINKS} vezes e foi eliminado(a)!`);
+        }
+        updatePlayerStatusDisplay(); // Atualiza o status com o jogador correto modificado
+
+        // Checagem de fim de jogo após a bebida
+        const activePlayersAfterDrink = players.filter(p => !p.eliminated);
+        if (players.length > 1 && activePlayersAfterDrink.length <= 1) {
+             if (activePlayersAfterDrink.length === 1) {
+                endGame(activePlayersAfterDrink[0].name + " é o(a) vencedor(a)!");
             } else {
                 endGame("Todos foram eliminados!");
             }
-        } else if (players.length === 1 && currentPlayer.eliminated) {
-            endGame(`${currentPlayer.name} foi eliminado(a)! Fim de jogo.`);
-        }
-        else {
+        } else if (players.length === 1 && playerInMainList.eliminated) {
+            endGame(`${playerInMainList.name} foi eliminado(a)! Fim de jogo.`);
+        } else {
             prepareNextTurn();
         }
     }
@@ -349,10 +375,10 @@ function endGame(message) {
 }
 
 function resetGame() {
-    playClickSound(); // Toca som
+    playClickSound();
     players = [];
-    currentPlayerIndex = -1;
     currentPlayer = null;
+    playerTurnOrder = []; // Limpa a ordem dos turnos
     
     loadQuestions();
     updatePlayerListUI();
@@ -369,23 +395,22 @@ function resetGame() {
 }
 
 // --- EVENT LISTENERS ---
-// Adicionado playClickSound() nas chamadas de evento dos botões
-addPlayerBtn.addEventListener('click', addPlayer); // addPlayer já chama playClickSound
+addPlayerBtn.addEventListener('click', addPlayer);
 playerNameInput.addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         event.preventDefault();
-        addPlayer(); // addPlayer já chama playClickSound
+        addPlayer();
     }
 });
-startGameBtn.addEventListener('click', startGame); // startGame já chama playClickSound
+startGameBtn.addEventListener('click', startGame);
 
-truthBtn.addEventListener('click', showTruth); // showTruth já chama playClickSound
-dareBtn.addEventListener('click', showDare);   // showDare já chama playClickSound
+truthBtn.addEventListener('click', showTruth);
+dareBtn.addEventListener('click', showDare);
 
-doneBtn.addEventListener('click', handleDone);     // handleDone já chama playClickSound
-drinkBtn.addEventListener('click', handleDrink);   // handleDrink já chama playClickSound
+doneBtn.addEventListener('click', handleDone);
+drinkBtn.addEventListener('click', handleDrink);
 
-restartGameBtn.addEventListener('click', resetGame); // resetGame já chama playClickSound
+restartGameBtn.addEventListener('click', resetGame);
 
 // Inicialização
-resetGame(); // Chama para configurar o estado inicial (já toca som)
+resetGame();
