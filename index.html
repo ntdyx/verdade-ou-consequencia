@@ -18,6 +18,8 @@
         <h3>Jogadores Adicionados:</h3>
         <ul id="player-list"></ul>
         <button id="start-game-btn" class="main-action-btn" disabled>Iniciar Jogo</button>
+        <!-- ALTERAÇÃO: Botão para resetar o histórico de perguntas -->
+        <button id="reset-questions-btn" class="secondary-action-btn">Resetar Perguntas Usadas</button>
     </div>
 
     <div id="loading-next-player" class="container" style="display: none;">
@@ -33,8 +35,8 @@
         </div>
         <div id="question-dare-display" style="display: none;">
             <p id="text-display"></p>
-            <button id="done-btn" class="action-btn">FEITO 😉</button>
-            <button id="drink-btn" class="action-btn danger-btn">BEBER 🥴</button>
+            <button id="done-btn" class="action-btn">FEITO!</button>
+            <button id="drink-btn" class="action-btn danger-btn">BEBER :(</button>
         </div>
         <hr>
         <h3>Status dos Jogadores:</h3>
@@ -47,9 +49,13 @@
         <button id="restart-game-btn" class="main-action-btn">Jogar Novamente</button>
     </div>
 
-    <!-- Elemento de áudio para o som de clique -->
-    <!-- Substitua 'click.mp3' pelo caminho do seu arquivo de som se for diferente -->
     <audio id="click-sound" src="click.mp3" preload="auto"></audio>
+
+    <!-- ALTERAÇÃO: Pré-carregamento de imagens para evitar "sumiço" -->
+    <div style="display:none;">
+        <img src="https://i.imgur.com/kwMtTbD.png" alt="Preload Logo">
+        <img src="https://i.imgur.com/oktrkra.gif" alt="Preload GIF">
+    </div>
 
     <script src="script.js"></script>
 </body>
